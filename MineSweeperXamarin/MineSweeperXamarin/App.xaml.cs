@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Xamarin_MineSweeper
+namespace MineSweeperXamarin
 {
     public partial class App : Application
     {
@@ -10,7 +10,7 @@ namespace Xamarin_MineSweeper
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new Page1();
         }
 
         protected override void OnStart()

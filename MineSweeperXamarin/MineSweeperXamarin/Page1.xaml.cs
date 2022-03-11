@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Xamarin_MineSweeper
+namespace MineSweeperXamarin
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Page1 : ContentPage
@@ -15,13 +15,17 @@ namespace Xamarin_MineSweeper
         public Page1()
         {
             InitializeComponent();
-            int m = 20;
             int n = 10;
             TapGestureRecognizer recognizer = new TapGestureRecognizer();
-            StackLayout stack = new StackLayout() { BackgroundColor = Color.AliceBlue};
-            Grid grid = new Grid() { RowSpacing = 1, ColumnSpacing = 1, HeightRequest = Width,
-            VerticalOptions = LayoutOptions.CenterAndExpand,
-            HorizontalOptions = LayoutOptions.CenterAndExpand};
+            StackLayout stack = new StackLayout() { BackgroundColor = Color.AliceBlue };
+            Grid grid = new Grid()
+            {
+                RowSpacing = 1,
+                ColumnSpacing = 1,
+                HeightRequest = Width,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+            };
             grid.BackgroundColor = new Color(25, 0, 0);
             for (int i = 0; i < n; i++)
             {
@@ -45,7 +49,7 @@ namespace Xamarin_MineSweeper
                         Margin = new Thickness(0),
                         HorizontalOptions = LayoutOptions.FillAndExpand,
                     };
-                    frame.SizeChanged += ( s, e ) =>{
+                    frame.SizeChanged += (s, e) => {
                         frame.HeightRequest = frame.Width;
                     };
                     frame.GestureRecognizers.Add(recognizer);

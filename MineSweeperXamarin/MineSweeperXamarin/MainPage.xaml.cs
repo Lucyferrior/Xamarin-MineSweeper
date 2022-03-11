@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Xamarin_MineSweeper
+namespace MineSweeperXamarin
 {
     public partial class MainPage : ContentPage
     {

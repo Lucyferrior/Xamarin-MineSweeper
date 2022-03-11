@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin_MineSweeper.Page1">
+   <!-- <Grid
+        BackgroundColor="Red"
+        RowSpacing="5"
+        ColumnSpacing="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Frame 
+            Padding="0"
+            Margin="0"
+            Grid.Column="0"
+            Grid.Row="0"
+            BackgroundColor="Yellow">
+            <Label Text="0"
+                   BackgroundColor="Blue"
+                   Margin="0"
+                   Padding="0"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"/>
+        </Frame>
+        <Frame 
+            Padding="0"
+            Margin="0"
+            Grid.Column="1"
+            Grid.Row="0"
+            BackgroundColor="Yellow">
+            <Label Text="1"
+                   BackgroundColor="Blue"
+                   Margin="0"
+                   Padding="0"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"/>
+        </Frame>
+        <Frame 
+            Padding="0"
+            Margin="0"
+            Grid.Column="2"
+            Grid.Row="0"
+            BackgroundColor="Yellow">
+            <Label Text="2"
+                   BackgroundColor="Blue"
+                   Margin="0"
+                   Padding="0"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"/>
+        </Frame>
+        <Frame 
+            Padding="0"
+            Margin="0"
+            Grid.Column="0"
+            Grid.Row="1"
+            BackgroundColor="Yellow">
+            <Label Text="0"
+                   BackgroundColor="Blue"
+                   Margin="0"
+                   Padding="0"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"/>
+        </Frame>
+        <Frame 
+            Padding="0"
+            Margin="0"
+            Grid.Column="1"
+            Grid.Row="1"
+            BackgroundColor="Yellow">
+            <Label Text="1"
+                   BackgroundColor="Blue"
+                   Margin="0"
+                   Padding="0"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"/>
+        </Frame>
+        <Frame 
+            Padding="0"
+            Margin="0"
+            Grid.Column="2"
+            Grid.Row="1"
+            BackgroundColor="Yellow">
+            <Label Text="2"
+                   BackgroundColor="Blue"
+                   Margin="0"
+                   Padding="0"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"/>
+        </Frame>
+    </Grid>-->
+</ContentPage>

@@ -25,5 +25,4 @@ namespace MineSweeperXamarin
             Content = stack;
         }
     }
-
 }

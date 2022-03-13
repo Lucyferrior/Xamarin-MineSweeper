@@ -6,11 +6,11 @@ using Xamarin.Forms;
 
 namespace MineSweeperXamarin
 {
-    public class TileCell : Frame
+    public abstract class TileCellBox : Frame
     {
         TapGestureRecognizer recognizer;
         int x, y;
-        public TileCell()
+        public TileCellBox()
         {
             Content = new Label
             {
@@ -23,6 +23,7 @@ namespace MineSweeperXamarin
                 Margin = new Thickness(0),
                 Padding = new Thickness(0)
             };
+            
             Padding = new Thickness(0);
             Margin = new Thickness(0);
             HorizontalOptions = LayoutOptions.FillAndExpand;
@@ -35,15 +36,44 @@ namespace MineSweeperXamarin
             this.GestureRecognizers.Add(recognizer);
             recognizer.Tapped += Clicked;
         }
-        public TileCell(int x, int y) : this()
+        public TileCellBox(int x, int y) : this()
         {
             this.x = x;
             this.y = y;
             (this.Content as Label).Text = x.ToString() + ", "+ y.ToString();
         }
-        public void Clicked(object sender, EventArgs e)
+        public virtual void Clicked(object sender, EventArgs e)
         {
             Trace.WriteLine("Hücrelerden bir tanesine tıklandı");
+        }
+    }
+    public class TileCell : TileCellBox
+    {
+        public TileCell() : base()
+        {
+        }
+        public TileCell(int x, int y) : base(x, y)
+        {
+        }
+        public override void Clicked(object sender, EventArgs e)
+        {
+            base.Clicked(sender, e);
+            (Content as Label).BackgroundColor = Color.Yellow;
+        }
+    }
+    public class MineCell : TileCellBox
+    {
+        public MineCell() : base()
+        {
+        }
+        public MineCell(int x,int y) : base(x, y)
+        {
+            (Content as Label).BackgroundColor = Color.Red;
+        }
+        public override void Clicked(object sender, EventArgs e)
+        {
+            base.Clicked(sender, e);
+            (Content as Label).BackgroundColor = Color.Red;
         }
     }
 }

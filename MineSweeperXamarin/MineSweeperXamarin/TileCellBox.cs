@@ -10,6 +10,7 @@ namespace MineSweeperXamarin
     {
         TapGestureRecognizer recognizer;
         int x, y;
+        
         public TileCellBox()
         {
             Content = new Label
@@ -23,6 +24,7 @@ namespace MineSweeperXamarin
                 Margin = new Thickness(0),
                 Padding = new Thickness(0)
             };
+            
             
             Padding = new Thickness(0);
             Margin = new Thickness(0);
@@ -68,12 +70,12 @@ namespace MineSweeperXamarin
         }
         public MineCell(int x,int y) : base(x, y)
         {
-            (Content as Label).BackgroundColor = Color.Red;
+            (Content as Label).BackgroundColor = new Color(25,0,0,0.5);
         }
         public override void Clicked(object sender, EventArgs e)
         {
             base.Clicked(sender, e);
-            (Content as Label).BackgroundColor = Color.Red;
+            (Content as Label).BackgroundColor = Color.Brown;
         }
     }
 }

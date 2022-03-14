@@ -16,8 +16,11 @@ namespace MineSweeperXamarin
             HeightRequest = Width;
             VerticalOptions = LayoutOptions.CenterAndExpand;
             HorizontalOptions = LayoutOptions.CenterAndExpand;
-            BackgroundColor = Color.Red;
-
+            BackgroundColor = Color.Yellow;
+            ChildAdded += (sender, e) =>
+            {
+                Trace.WriteLine(e.Element.ToString());
+            };
             CreateBoard();
         }
         public Board(int n) : this()
@@ -27,69 +30,52 @@ namespace MineSweeperXamarin
         public void CreateBoard()
         {
             Children.Clear();
-            for (int i = 0; i < n; i++)
+            for (int y = 0; y < n; y++)
             {
-                for (int j = 0; j < n; j++)
+                for (int x = 0; x < n; x++)
                 {
-                    TileCellBox Cell = new TileCell(i, j);
-                    Children.Add(Cell, i, j);
+                    TileCellBox cell = new TileCell(x, y);
+                    Children.Add(cell, x, y);
+                    TapGestureRecognizer recognizer = new TapGestureRecognizer();
+                    cell.GestureRecognizers.Add(recognizer);
                 }
             }
-            CreateMines(5);
+            CreateMines(100);
         }
-        private void CreateMines(int MineCount)
+        public void CreateMines(int MineCount)
         {
             int x, y;
+            TileCellBox mine;
             for (int i = 0; i < MineCount; i++)
             {
                 int[] coordinates = getRandomMine();
-                x= coordinates[0];
+                x = coordinates[0];
                 y = coordinates[1];
-                TileCellBox mine = new MineCell(x, y);
-                Children.Add(mine, x, y);
+                mine = new MineCell(x, y);
+                ChangeAt(mine, x, y);
             }
+            Trace.WriteLine("ÇOCUKLARIN SAYISI: " + Children.Count);
+        }
+        private void ChangeAt(TileCellBox box, int x, int y)
+        {
+            int index = y * n + x;
+            Children.RemoveAt(index);
+            Children.Insert(index, box);
+            Children.Add(box, x, y);
         }
         int[] getRandomMine()
         {
             Random rand = new Random();
+            int counter = 0;
             int x, y;
             do
             {
                 x = rand.Next(n);
                 y = rand.Next(n);
-                Trace.WriteLine(x.ToString() + ", " + y.ToString());
-            } while (Children[y*n+x].GetType() == typeof(MineCell));
+                counter++;
+            } while (Children[y * n + x].GetType() == typeof(MineCell));
             return new int[] { x, y };
+            
         }
     }
 }
-
-/*private void CreateMines(int MineCount)
-        {
-            int x = 0, y = 0;
-
-            for (int i = 0; i < MineCount; i++)
-            {
-                int[] coordinates = getRandomMines();
-                x = coordinates[0];
-                y = coordinates[1];
-                Box mine = new Mine() { Name = x + "," + y };
-                mine.Location = new Point(x * (mine.Width + cellPadding) + tableMargin, y * (mine.Height + cellPadding) + tableMargin);
-                Trace.WriteLine(mine.Location.X);
-                mine.Click += mineClick;
-                mine.MouseDown += MineRightClick;
-                
-                boxes[x, y] = mine;
-            }
-        }
-int[] getRandomMines()
-        {
-            Random rand = new Random();
-            int x, y;
-            do
-            {
-                x = rand.Next(_n);
-                y = rand.Next(_n);
-            } while (boxes[x, y].GetType() == typeof(Mine));
-            return new int[] { x, y };
-        }*/

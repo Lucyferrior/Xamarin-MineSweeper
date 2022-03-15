@@ -9,11 +9,15 @@ namespace MineSweeperXamarin
     public abstract class TileCellBox : Frame
     {
         TapGestureRecognizer recognizer;
-        int x, y;
-        
+        public int x, y;
+        public TileCellBox Left, Right, Top, Bottom;
+        public TileCellBox LeftTop, RightTop, LeftBottom, RightBottom;
+        public List<TileCellBox> boxAround;
+        public Label label;
+        public Boolean Clickable = true;
         public TileCellBox()
         {
-            Content = new Label
+            label = new Label()
             {
                 TextColor = Color.Black,
                 BackgroundColor = Color.Aqua,
@@ -24,7 +28,7 @@ namespace MineSweeperXamarin
                 Margin = new Thickness(0),
                 Padding = new Thickness(0)
             };
-            
+            Content = label;
             
             Padding = new Thickness(0);
             Margin = new Thickness(0);
@@ -34,6 +38,7 @@ namespace MineSweeperXamarin
             {
                 HeightRequest = Width;
             };
+            
             recognizer = new TapGestureRecognizer();
             this.GestureRecognizers.Add(recognizer);
             recognizer.Tapped += Clicked;
@@ -42,11 +47,24 @@ namespace MineSweeperXamarin
         {
             this.x = x;
             this.y = y;
-            (this.Content as Label).Text = x.ToString() + ", "+ y.ToString();
+            //label.Text = x.ToString() + ", "+ y.ToString();
+        }
+        public void AssignDirections()
+        {
+            boxAround = new List<TileCellBox>();
+
+            boxAround.Add(LeftTop);
+            boxAround.Add(Top);
+            boxAround.Add(RightTop);
+            boxAround.Add(Right);
+            boxAround.Add(RightBottom);
+            boxAround.Add(Bottom);
+            boxAround.Add(LeftBottom);
+            boxAround.Add(Left);
         }
         public virtual void Clicked(object sender, EventArgs e)
         {
-            Trace.WriteLine("Hücrelerden bir tanesine tıklandı");
+            Trace.WriteLine("( " + x.ToString() + ", " + y.ToString() + " ) butonuna tıklandı" );
         }
     }
     public class TileCell : TileCellBox
@@ -60,7 +78,50 @@ namespace MineSweeperXamarin
         public override void Clicked(object sender, EventArgs e)
         {
             base.Clicked(sender, e);
-            (Content as Label).BackgroundColor = Color.Yellow;
+
+            AutoClick(sender as TileCellBox);
+        }
+        private void AutoClick(TileCellBox cellBox)
+        {
+            cellBox.label.BackgroundColor = Color.Yellow;
+
+            if (cellBox.Clickable)
+            {
+                cellBox.Clickable = false;
+
+                int mineCount = CheckMines();
+                if (mineCount == 0)
+                {
+                    foreach (TileCellBox item in cellBox.boxAround)
+                    {
+                        if (item != null)
+                        {
+                            AutoClick(item);
+                        }
+                    }
+                }
+                else
+                {
+                    Trace.WriteLine("( " + cellBox.x.ToString() + ", " + cellBox.y.ToString() + " ) etrafında " + mineCount.ToString() + " Mayın var");
+                    cellBox.label.Text = mineCount.ToString();
+                }
+
+                int CheckMines()
+                {
+                    int _mineCount = 0;
+                    foreach (TileCellBox item in cellBox.boxAround)
+                    {
+                        if (item != null)
+                        {
+                            if (item.GetType() == typeof(MineCell))
+                            {
+                                _mineCount++;
+                            }
+                        }
+                    }
+                    return _mineCount;
+                }
+            }
         }
     }
     public class MineCell : TileCellBox
@@ -70,12 +131,15 @@ namespace MineSweeperXamarin
         }
         public MineCell(int x,int y) : base(x, y)
         {
-            (Content as Label).BackgroundColor = new Color(25,0,0,0.5);
+            label.BackgroundColor = new Color(25,0,0,0.5);
         }
         public override void Clicked(object sender, EventArgs e)
         {
             base.Clicked(sender, e);
-            (Content as Label).BackgroundColor = Color.Brown;
+            label.BackgroundColor = Color.Brown;
+            Trace.WriteLine("OYUN BİTTİ AHMAK");
+
         }
+
     }
 }

@@ -13,16 +13,32 @@ namespace MineSweeperXamarin
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Page1 : ContentPage
     {
+        Board board;
         public Page1()
         {
             InitializeComponent();
-            int n = 10;
-            StackLayout stack = new StackLayout() 
+            int n = 20;
+            board = new Board(n);
+            StackLayout stack = new StackLayout()
             {
-                BackgroundColor = Color.AliceBlue
+                BackgroundColor = Color.YellowGreen
             };
-            stack.Children.Add(new Board());
+            stack.Children.Add(board);
+            Button restartBtn = new Button()
+            {
+                Text = "Yeniden başlat"
+            };
+            stack.Children.Add(restartBtn);
             Content = stack;
+            board.GameOver += deneme;
         }
+
+        async public void deneme(object sender, EventArgs e)
+        {
+            //await DisplayAlert("Restart Game", "You Lost!", "Restart");
+            board.CreateBoard();
+        }
+
+
     }
 }

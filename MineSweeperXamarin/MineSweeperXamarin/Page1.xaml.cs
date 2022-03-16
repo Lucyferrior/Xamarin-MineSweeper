@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -31,15 +32,20 @@ namespace MineSweeperXamarin
             restartBtn.Clicked += (s, e) => { board.CreateBoard(); };
             stack.Children.Add(restartBtn);
             Content = stack;
-            board.GameOver += deneme;
+            board.GameOver += denemeOver;
+            board.GameWin += denemeWin;
         }
-
-        async public void deneme(object sender, EventArgs e)
+        public void denemeWin(object sender, EventArgs e)
         {
-            await DisplayAlert("Restart Game", "You Lost!", "Restart");
-            board.CreateBoard();
+            DisplayAlert("Tebrikler", "Kazandın!", "Oynamaya Devam Et");
+            Trace.WriteLine("CONGRATS!! You WIN");
         }
-
+        public void denemeOver(object sender, EventArgs e)
+        {
+            DisplayAlert("Ünzünüm", "Kaybettin!", "Yeniden Başlat");
+            //board.CreateBoard();
+        }
+        
 
     }
 }

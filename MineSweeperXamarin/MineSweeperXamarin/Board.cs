@@ -11,10 +11,13 @@ namespace MineSweeperXamarin
     {
         int n = 10;
 
-        //public delegate void EventHandler(object sender, EventArgs e);
-        public event EventHandler GameOver; 
-
-
+        public delegate void EventHandler(object sender, EventArgs e);
+        public event EventHandler GameOver;
+        public event EventHandler GameWin;
+        protected virtual void onGameWin(object sender, EventArgs e)
+        {
+            GameWin?.Invoke(sender, EventArgs.Empty);
+        }
         protected virtual void onGameOver(object sender, EventArgs e)
         {
             GameOver?.Invoke(sender, EventArgs.Empty);
@@ -38,18 +41,44 @@ namespace MineSweeperXamarin
         {
             Trace.WriteLine(n.ToString() + " KARELİ OYUN OLUŞTURULUYOR");
             Children.Clear();
+            TileCellBox cell;
             for (int y = 0; y < n; y++)
             {
                 for (int x = 0; x < n; x++)
                 {
-                    TileCellBox cell = new TileCell(x, y);
+                    cell = new TileCell(x, y);
                     Children.Add(cell, x, y);
-                    TapGestureRecognizer recognizer = new TapGestureRecognizer();
-                    cell.GestureRecognizers.Add(recognizer);
+                    cell.recognizer.Tapped += isWin;
                 }
             }
             CreateMines(20);
             AssignDirections();
+        }
+        private void isWin(object sender, EventArgs e)
+        {
+
+
+            if (check())
+            {
+                Trace.WriteLine("oyun kazanıldı");
+                GameWin(sender, EventArgs.Empty);
+            }
+
+            bool check()
+            {
+                Trace.WriteLine("kazanma durumu kontrol ediliyor");
+                foreach (TileCellBox item in Children)
+                {
+                    if(item.GetType() == typeof(TileCell)) //normal hucrelerde
+                    {
+                        if (item.Clickable) // tıklanmamış buton var mı diye kontrol edliyoruz
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
         }
         private void AssignDirections()
         {
@@ -110,7 +139,6 @@ namespace MineSweeperXamarin
         }
         public void CreateMines(int MineCount) // mayınların oluşturulması geliştirilmeli
         {
-            //TapGestureRecognizer mineRecognizer = new TapGestureRecognizer();
             int x, y;
             TileCellBox mine = null;
             for (int i = 0; i < MineCount; i++)
@@ -122,7 +150,6 @@ namespace MineSweeperXamarin
                 ChangeAt(mine, x, y);
             }
             Trace.WriteLine("ÇOCUKLARIN SAYISI: " + Children.Count);
-            
         }
 
 

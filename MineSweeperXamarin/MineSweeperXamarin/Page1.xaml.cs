@@ -17,7 +17,7 @@ namespace MineSweeperXamarin
         public Page1()
         {
             InitializeComponent();
-            int n = 20;
+            int n = 10;
             board = new Board(n);
             StackLayout stack = new StackLayout()
             {
@@ -28,6 +28,7 @@ namespace MineSweeperXamarin
             {
                 Text = "Yeniden başlat"
             };
+            restartBtn.Clicked += (s, e) => { board.CreateBoard(); };
             stack.Children.Add(restartBtn);
             Content = stack;
             board.GameOver += deneme;
@@ -35,7 +36,7 @@ namespace MineSweeperXamarin
 
         async public void deneme(object sender, EventArgs e)
         {
-            //await DisplayAlert("Restart Game", "You Lost!", "Restart");
+            await DisplayAlert("Restart Game", "You Lost!", "Restart");
             board.CreateBoard();
         }
 

@@ -9,7 +9,6 @@ namespace MineSweeperXamarin
 {
     public class Board : Grid
     {
-        TapGestureRecognizer mineRecognizer;
         int n = 10;
 
         //public delegate void EventHandler(object sender, EventArgs e);
@@ -33,7 +32,6 @@ namespace MineSweeperXamarin
             VerticalOptions = LayoutOptions.CenterAndExpand;
             HorizontalOptions = LayoutOptions.CenterAndExpand;
             BackgroundColor = Color.Yellow;
-            mineRecognizer = new TapGestureRecognizer();
             CreateBoard();
         }
         public void CreateBoard()
@@ -112,25 +110,27 @@ namespace MineSweeperXamarin
         }
         public void CreateMines(int MineCount) // mayınların oluşturulması geliştirilmeli
         {
+            //TapGestureRecognizer mineRecognizer = new TapGestureRecognizer();
             int x, y;
-            TileCellBox mine;
+            TileCellBox mine = null;
             for (int i = 0; i < MineCount; i++)
             {
                 int[] coordinates = getRandomMine();
                 x = coordinates[0];
                 y = coordinates[1];
                 mine = new MineCell(x, y);
-                mine.GestureRecognizers.Add(mineRecognizer);
-                //mineRecognizer.Tapped += onGameOver;
                 ChangeAt(mine, x, y);
             }
             Trace.WriteLine("ÇOCUKLARIN SAYISI: " + Children.Count);
+            
         }
 
 
         private void ChangeAt(TileCellBox box, int x, int y)
         {
             int index = y * n + x;
+            box.recognizer.Tapped += onGameOver;
+
             Children.RemoveAt(index);
             Children.Insert(index, box);
             Children.Add(box, x, y);

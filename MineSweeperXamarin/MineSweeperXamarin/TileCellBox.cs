@@ -8,7 +8,7 @@ namespace MineSweeperXamarin
 {
     public abstract class TileCellBox : Frame
     {
-        TapGestureRecognizer recognizer;
+        public TapGestureRecognizer recognizer;
         public int x, y;
         public TileCellBox Left, Right, Top, Bottom;
         public TileCellBox LeftTop, RightTop, LeftBottom, RightBottom;
